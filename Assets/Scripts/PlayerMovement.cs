@@ -8,6 +8,7 @@ public class PlayerMovement : MonoBehaviour
     Vector3 originalScale;
     Animator animator;
     int health = 100; // initialize health with 100 points
+    public int MaxHealth = 100;
     
     void Awake()
     {
@@ -19,6 +20,7 @@ public class PlayerMovement : MonoBehaviour
     public void Hit()
     {
         animator.SetTrigger("Hit");
+        hud.UpdateHealthText(health);
     }
 
     // Update is called once per frame
@@ -60,6 +62,9 @@ public class PlayerMovement : MonoBehaviour
     public void DealDamage(int damage)
     {
         health = Mathf.Clamp(health - damage, 0, 100);
+      
         hud.UpdateHealthText(health);
+        
+        hud.UpdateHealthBar(damage, MaxHealth);
     }
 }

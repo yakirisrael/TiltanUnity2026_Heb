@@ -48,7 +48,7 @@ public class EnemyController : MonoBehaviour
                    FirstPunch = false;
                    
                    // call the function that deals damage on hud
-                   player.GetComponent<PlayerMovement>().DealDamage(damage);
+                   player.GetComponent<PlayerMovement>().DealDamage(-damage);
                }
             }
         }
