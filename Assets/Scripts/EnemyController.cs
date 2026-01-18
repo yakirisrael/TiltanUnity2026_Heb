@@ -16,7 +16,7 @@ public class EnemyController : MonoBehaviour
     private enemyState state = enemyState.Unaware;
     public GameObject player;
 
-    public float deadZone = 0.05f;
+    public float deadZone = 0.35f;
     public float delta = 0.05f;
     
     private Animator animator;
@@ -60,7 +60,7 @@ public class EnemyController : MonoBehaviour
                    FirstPunch = false;
                    
                    // call the function that deals damage on hud
-                //   player.GetComponent<PlayerMovement>().DealDamage(-damage);
+                //   player.GetComponent<PlayerMovement>().DealDamage(damage);
                }
             }
         }

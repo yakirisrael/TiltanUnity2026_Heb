@@ -73,7 +73,7 @@ public class PlayerMovement : MonoBehaviour
       
         hud.UpdateHealthText(health);
         
-        hud.UpdateHealthBar(damage, MaxHealth);
+        hud.UpdateHealthBar(-damage, MaxHealth);
     }
     
     private void OnTriggerEnter2D(Collider2D other)

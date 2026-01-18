@@ -32,7 +32,7 @@ public class GameManager : MonoBehaviour
 
         Time.timeScale = 1;
         
-        SpawnEnemies(10);
+      //  SpawnEnemies(10);
     }
 
     public void QuitGame()
