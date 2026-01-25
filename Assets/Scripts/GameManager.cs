@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -9,6 +10,8 @@ public class GameManager : MonoBehaviour
     public GameObject EnemyPrefab;
     
     string PauseMenuButton = "PauseGame";
+
+    public float SpawnDelay = 3.0f;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -32,7 +35,7 @@ public class GameManager : MonoBehaviour
 
         Time.timeScale = 1;
         
-        SpawnEnemies(10);
+        StartCoroutine(SpawnEnemies(10));
     }
 
     public void QuitGame()
@@ -50,12 +53,15 @@ public class GameManager : MonoBehaviour
             ShowPauseMenu();
         }
     }
+    
+    
 
-    void SpawnEnemies(int amount)
+    IEnumerator SpawnEnemies(int amount)
     {
         for (int i = 0; i < amount; i++)
         {
             GameObject enemy = Instantiate(EnemyPrefab, new Vector3(i * 0.5f, 0, 0), Quaternion.identity);
+            yield return new WaitForSeconds(SpawnDelay);
         }
     }
 
