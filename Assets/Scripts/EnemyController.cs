@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 
@@ -7,6 +8,7 @@ public enum enemyState
     Unaware,
     ChasePlayer,
     Attack,
+    WaitForAttack,
     ReturnToPosition,
     Dead
 }
@@ -24,7 +26,7 @@ public class EnemyController : MonoBehaviour
 
     public int damage = 10;
 
-    
+    public float delayBetweenAttacks = 2.0f;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -55,31 +57,45 @@ public class EnemyController : MonoBehaviour
         if (distance < deadZone)
         {
            // Debug.Log("Stop chasing");
+           
+           // not walking
             animator.SetBool("IsWalking", false);
 
-            if (FirstPunch)
-            {
-                animator.SetTrigger("Punch");
-
-               if (IsAnimationFinished("EnemyPunch"))
-               {
-                  // Debug.Log("IsAnimationFinished");
-                   
-                   player.GetComponent<PlayerMovement>().Hit();
-                   FirstPunch = false;
-                   
-                   // call the function that deals damage on hud
-                //   player.GetComponent<PlayerMovement>().DealDamage(damage);
-               }
-            }
+            if (state == enemyState.ChasePlayer)
+                StartCoroutine(Attack());
         }
         else
         {
            // Debug.Log("chasing");
             transform.position += diff.normalized* delta *Time.deltaTime;
             animator.SetBool("IsWalking", true);
+            
+            state = enemyState.ChasePlayer;
         }
 
+    }
+
+    IEnumerator Attack()
+    {
+        state = enemyState.Attack;
+
+        while (true)
+        {
+            animator.SetTrigger("Punch");
+            
+            while (!IsAnimationFinished("EnemyPunch"))
+            {
+                yield return null;
+            }
+            // Debug.Log("IsAnimationFinished");
+
+           // player.GetComponent<PlayerMovement>().Hit();
+
+                // call the function that deals damage on hud
+             player.GetComponent<PlayerMovement>().DealDamage(damage);
+            state = enemyState.WaitForAttack;
+            yield return new WaitForSeconds(delayBetweenAttacks);
+        }
     }
 
     bool IsAnimationFinished(string animationName)
