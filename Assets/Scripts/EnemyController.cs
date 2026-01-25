@@ -14,7 +14,7 @@ public enum enemyState
 public class EnemyController : MonoBehaviour
 {
     private enemyState state = enemyState.Unaware;
-    public GameObject player;
+    public PlayerMovement player;
 
     public float deadZone = 0.35f;
     public float delta = 0.05f;
@@ -23,13 +23,17 @@ public class EnemyController : MonoBehaviour
     private bool FirstPunch = true;
 
     public int damage = 10;
-   
-    
+
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Awake()
+    void Start()
     {
         animator = GetComponent<Animator>();
+
+        GameObject obj = GameObject.FindGameObjectWithTag("Player");
+        // found the player
+        if (obj != null)
+            player = obj.GetComponent<PlayerMovement>();
     }
     
     // Update is called once per frame
