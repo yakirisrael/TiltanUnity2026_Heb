@@ -125,5 +125,10 @@ public class EnemyController : MonoBehaviour
        return false;
     }
 
+    public void PlayAttackSFX(AudioClip clip)
+    {
+        AudioManager.Instance.PlaySFX(clip);
+    }
+
 
 }

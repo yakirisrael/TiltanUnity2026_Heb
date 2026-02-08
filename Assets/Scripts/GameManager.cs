@@ -30,6 +30,12 @@ public class GameManager : MonoBehaviour
     
     public void ShowHUD()
     {
+        if (LevelManager.Instance.leveSounds.Count > 0)
+        {
+            AudioClip clipToPlay = LevelManager.Instance.leveSounds[0];
+            AudioManager.Instance.PlayMusic(clipToPlay);
+        }
+
         HUD.SetActive(true);
         PauseMenu.SetActive(false);
 

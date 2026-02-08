@@ -57,6 +57,8 @@ public class PlayerMovement : MonoBehaviour
         return bHit;
     }
 
+    [SerializeField]
+    private AudioClip clip;
     // Update is called once per frame
     void Update()
     { 
