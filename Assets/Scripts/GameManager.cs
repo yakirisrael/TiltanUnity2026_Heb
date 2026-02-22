@@ -16,9 +16,24 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         ShowPauseMenu();
-
-      
+        
+       // PlayerPrefs.DeleteKey("TotalTimeInt");
+       TotalTime = PlayerPrefs.GetInt("TotalTimeInt", 0);
     }
+
+    public float TotalTime = 0;
+
+    private IEnumerator SaveTotalTimePlayed()
+    {
+        yield return new WaitForSeconds(1);
+        
+        PlayerPrefs.SetInt("TotalTimeInt", (int)TotalTime);
+        PlayerPrefs.Save();
+        
+        Debug.Log(TotalTime);
+        StartCoroutine(SaveTotalTimePlayed());
+    }
+
 
     void ShowPauseMenu()
     {
@@ -30,6 +45,8 @@ public class GameManager : MonoBehaviour
     
     public void ShowHUD()
     {
+        StartCoroutine(SaveTotalTimePlayed());
+        
         if (LevelManager.Instance.leveSounds.Count > 0)
         {
             AudioClip clipToPlay = LevelManager.Instance.leveSounds[0];
@@ -54,6 +71,8 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        TotalTime += Time.deltaTime;
+        
         if (Input.GetButtonDown(PauseMenuButton))
         {
             ShowPauseMenu();

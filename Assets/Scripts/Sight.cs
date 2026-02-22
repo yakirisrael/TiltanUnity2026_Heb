@@ -21,7 +21,7 @@ public class Sight : MonoBehaviour
         {
           //  Debug.Log("Collider " + hit.collider.name + " distance: " + hit.distance);
             Debug.DrawRay(transform.position, Vector2.left * hit.distance, Color.green);
-            if (hit.collider.CompareTag("Player"))
+            if (hit.collider.CompareTag("PlayerHitBox"))
                 return true;
         }
         return false;

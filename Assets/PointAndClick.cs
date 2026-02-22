@@ -13,7 +13,7 @@ public class PointAndClick : MonoBehaviour
     {
         if (IsHover(out string objectName))
         {
-            Debug.Log("Hover object: " +  objectName);
+         //   Debug.Log("Hover object: " +  objectName);
         }
     }
 

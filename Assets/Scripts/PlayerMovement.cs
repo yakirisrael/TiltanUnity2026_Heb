@@ -1,18 +1,29 @@
 using System;
 using UnityEngine;
 
+[RequireComponent(typeof(Animator))]
 public class PlayerMovement : MonoBehaviour
 {
+    [Tooltip("The speed can not be more than 100")]
     public float speed = 1.0f;
     public HUD hud;
     
     Vector3 originalScale;
     Animator animator;
-    int health = 100; // initialize health with 100 points
+  
+
+    [Header("Health Settings")] 
+    [Min(0)]
+    public int health = 100; // initialize health with 100 points
+    [Range(100, 500)]
     public int MaxHealth = 100;
 
+    [Space(10)]
+    //[HideInInspector]
     public Collider2D NavArea;
     bool bJumpPressed = false;
+    
+    [SerializeField]
     private Rigidbody2D rb;
     public int JumpForce = 1;
 
@@ -29,8 +40,19 @@ public class PlayerMovement : MonoBehaviour
     {
         originalScale = transform.localScale;
         
-        animator = GetComponent<Animator>();
-        rb = GetComponent<Rigidbody2D>();
+       
+    }
+
+    private void OnValidate()
+    {
+       if (health >  MaxHealth)
+           health = MaxHealth;
+       
+       if (animator == null)
+            animator = GetComponent<Animator>();
+       
+       if (rb == null)
+         rb = GetComponent<Rigidbody2D>();
     }
 
     public void Hit()
